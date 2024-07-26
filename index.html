@@ -1,14 +1,12 @@
 
-
-
 <html>
     <head>
         <title>ECS Team Tool</title>
         
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <style>
-    
-	#container {
+		<style>
+        
+		#container {
     width: 100%;
     margin: 0 auto;
     text-align: center;
@@ -54,9 +52,8 @@ button {
     display: inline-block;
     width: 42vw;
 }
-
-	</style>
-	</head> 
+		</style>
+    </head> 
     <body>
         <div id ="container">
             <div class="left" style="text-align: left;">
@@ -64,8 +61,7 @@ button {
                     <button class="join">JOIN LINES</button>
                     <button class="add">ADD HREF</button>
                     <button class="remove">REMOVE HREF</button>
-                    <button class="remove_toc_V2">REMOVE TOC V2</button>
-					<button class="remove_toc_V4">REMOVE TOC V4</button>
+                    <button class="remove_toc">REMOVE TOC</button>
                     <button class="uppercase">UPPERCASE</button>
                     <button class="lowercase">LOWERCASE</button>
                     <button class="save">SAVE OUTPUT</button>
@@ -94,8 +90,7 @@ const joinBtn =  document.querySelector('.join');
 const layout =  document.querySelector('.layout-selector');
 const addBtn =  document.querySelector('.add');
 const removeBtn =  document.querySelector('.remove');
-const removeTOCBtnV2 =  document.querySelector('.remove_toc_V2');
-const removeTOCBtnV4 =  document.querySelector('.remove_toc_V4');
+const removeTOCBtn =  document.querySelector('.remove_toc');
 const saveBtn =  document.querySelector('.save');
 const reloadBtn =  document.querySelector('.reload');
 const uppercaseBtn =  document.querySelector('.uppercase');
@@ -146,30 +141,8 @@ const saveOutput = () => {
     anchor.click();
     document.body.removeChild(anchor);
 }
-// run when remove toc V2 is clicked
-const removeTOCV2 = () => {
-   const returnURL = (url) => {
-        url = (/{{%%/g.test(url) || /%%}}/g.test(url)) ? url.replace(/{{%%/g,'{{~~').replace(/%%}}/g,'~~}}') : url;
-        const newURL = decodeURIComponent(url.split('&click=')[1]);
-        if (/{{~~/g.test(newURL) || /~~}}/g.test(newURL)) {
-            return newURL.replace(/{{~~/g,'%%').replace(/~~}}/g,'%%');
-        } 
-		else if (/{{\$/g.test(newURL) || /\$}}/g.test(newURL) || /}}}/g.test(newURL)) 
-		{
-            return newURL.replace(/{{\$/g,'$').replace(/\$}}/g,'$').replace(/}}}/g, '}')
-        }
-		else 
-		{
-            return newURL;
-        }
-    }
-    output.querySelector('textarea').value = input.querySelector('textarea').value.replace(/https:\/\/www.medtargetsystem.com\/toc.+?(?=")/g, returnURL);
-}
-
-
-
-// run when remove toc V4 is clicked
-const removeTOCV4 = () => {
+// run when remove toc is clicked
+const removeTOC = () => {
     const returnURL = (url) => {
         url = (/{{%%/g.test(url) || /%%}}/g.test(url)) ? url.replace(/{{%%/g,'{{~~').replace(/%%}}/g,'~~}}') : url;
         const newURL = decodeURIComponent(url.split('&click=')[1]);
@@ -179,12 +152,13 @@ const removeTOCV4 = () => {
 		else if (/{{\$/g.test(newURL) || /\$}}/g.test(newURL) || /}}}/g.test(newURL)) 
 		{
             return newURL.replace(/{{\$/g,'$').replace(/\$}}/g,'$').replace(/}}}/g, '}')
-        }
-		else {
+        } 
+		else 
+		{
             return newURL;
         }
     }
-    output.querySelector('textarea').value = input.querySelector('textarea').value.replace(/https:\/\/aim-tag.hcn.health\/toc.+?(?=")/g, returnURL);
+    output.querySelector('textarea').value = input.querySelector('textarea').value.replace(/https:\/\/www.medtargetsystem.com\/toc.+?(?=")/g, returnURL).replace(/https:\/\/aim-tag.hcn.health\/toc.+?(?=")/g, returnURL);
 }
 // run when more than 1 character is typed in the box
 const characterCount = () => {
@@ -205,8 +179,7 @@ addBtn.addEventListener('click', addAnchors);
 removeBtn.addEventListener('click', removeAnchors);
 uppercaseBtn.addEventListener('click', uppercase);
 lowercaseBtn.addEventListener('click', lowercase);
-removeTOCBtnV2.addEventListener('click', removeTOCV2);
-removeTOCBtnV4.addEventListener('click', removeTOCV4);
+removeTOCBtn.addEventListener('click', removeTOC);
 saveBtn.addEventListener('click', saveOutput);
 reloadBtn.addEventListener('click', () => location.reload(true));
 		</script>    
