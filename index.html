@@ -1,4 +1,6 @@
 
+
+
 <html>
     <head>
         <title>ECS Team Tool</title>
@@ -146,19 +148,26 @@ const saveOutput = () => {
 }
 // run when remove toc V2 is clicked
 const removeTOCV2 = () => {
-    const returnURL = (url) => {
+   const returnURL = (url) => {
         url = (/{{%%/g.test(url) || /%%}}/g.test(url)) ? url.replace(/{{%%/g,'{{~~').replace(/%%}}/g,'~~}}') : url;
         const newURL = decodeURIComponent(url.split('&click=')[1]);
         if (/{{~~/g.test(newURL) || /~~}}/g.test(newURL)) {
             return newURL.replace(/{{~~/g,'%%').replace(/~~}}/g,'%%');
-        } else if (/{{\$/g.test(newURL) || /\$}}/g.test(newURL)) {
-            return newURL.replace(/{{\$/g,'$').replace(/\$}}/g,'$')
-        } else {
+        } 
+		else if (/{{\$/g.test(newURL) || /\$}}/g.test(newURL) || /}}}/g.test(newURL)) 
+		{
+            return newURL.replace(/{{\$/g,'$').replace(/\$}}/g,'$').replace(/}}}/g, '}')
+        }
+		else 
+		{
             return newURL;
         }
     }
     output.querySelector('textarea').value = input.querySelector('textarea').value.replace(/https:\/\/www.medtargetsystem.com\/toc.+?(?=")/g, returnURL);
 }
+
+
+
 // run when remove toc V4 is clicked
 const removeTOCV4 = () => {
     const returnURL = (url) => {
@@ -166,9 +175,12 @@ const removeTOCV4 = () => {
         const newURL = decodeURIComponent(url.split('&click=')[1]);
         if (/{{~~/g.test(newURL) || /~~}}/g.test(newURL)) {
             return newURL.replace(/{{~~/g,'%%').replace(/~~}}/g,'%%');
-        } else if (/{{\$/g.test(newURL) || /\$}}/g.test(newURL)) {
-            return newURL.replace(/{{\$/g,'$').replace(/\$}}/g,'$')
-        } else {
+        } 
+		else if (/{{\$/g.test(newURL) || /\$}}/g.test(newURL) || /}}}/g.test(newURL)) 
+		{
+            return newURL.replace(/{{\$/g,'$').replace(/\$}}/g,'$').replace(/}}}/g, '}')
+        }
+		else {
             return newURL;
         }
     }
